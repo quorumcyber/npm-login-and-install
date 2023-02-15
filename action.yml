@@ -1,5 +1,12 @@
 name: login-and-install
 description: "Login to NPM, install dependencies, download local.settings.json"
+inputs:
+  token:
+    description: 'NPM Token'
+    required: true
+  settings:
+    description: 'Local settings json file'
+    required: true
 runs:
   using: "composite"
   steps:
@@ -9,11 +16,11 @@ runs:
         node-version: 18
         cache: 'npm'
     - name: NPM login
-      run: echo '//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}' > ~/.npmrc
+      run: echo '//registry.npmjs.org/:_authToken=${{ inputs.token }}' > ~/.npmrc
       shell: bash
     - name: Install dependencies
       run: npm ci
       shell: bash
     - name: Add local.settings.json
-      run: echo '${{ secrets.LOCAL_SETTINGS }}' > ./local.settings.json
+      run: echo '${{ inputs.settings }}' > ./local.settings.json
       shell: bash
