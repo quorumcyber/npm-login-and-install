@@ -25,5 +25,5 @@ runs:
       run: npm ci
       shell: bash
     - name: Add local.settings.json
-      run: echo '${{ inputs.settings }}' > '/home/runner/work/${{ inputs.repo }}/${{ inputs.repo }}/.local.settings.json
+      run: echo '${{ inputs.settings }}' > '/home/runner/work/${{ inputs.repo }}/${{ inputs.repo }}/local.settings.json
       shell: bash
