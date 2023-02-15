@@ -1,0 +1,16 @@
+name: login-and-install
+description: "Login to NPM, install dependencies, download local.settings.json"
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 18
+        cache: 'npm'
+    - name: NPM login
+      run: echo '//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}' > ~/.npmrc
+    - name: Install dependencies
+      run: npm ci
+    - name: Add local.settings.json
+      run: echo '${{ secrets.LOCAL_SETTINGS }}' > ./local.settings.json
