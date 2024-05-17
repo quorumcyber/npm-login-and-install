@@ -10,12 +10,24 @@ inputs:
   repo:
     description: "Name of the repo calling this action"
     required: true
+  branch:
+    description: "branch to use for the run"
+    required: false
+    type: string
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
+    - if: ${{ !inputs.branch }}
+        name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+    - if: ${{ inputs.branch }}
+        name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ inputs.branch }}
     - uses: actions/setup-node@v4
       with:
         node-version: 20
